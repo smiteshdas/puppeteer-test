@@ -43,7 +43,7 @@ const scrapeLogic = async (res) => {
     res.send(logStatement);*/
     
   
-    const signInBtn = await page.waitForSelector("html>body>div[6]>div[1]>div>div[2]>div[2]>div[3]>div>div>div>div>div>a");
+    const signInBtn = await page.waitForSelector("body>div[6]>div[1]>div>div[2]>div[2]>div[3]>div>div>div>div>div>a");
     const fullTitle = await signInBtn.evaluate((el) => el.textContent);
     /*
     await page.click(searchResultSelector);
