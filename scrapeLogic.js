@@ -38,7 +38,7 @@ const scrapeLogic = async (res) => {
         })
       ]);
       
-      load_page()
+      await load_page()
   
   })
           
