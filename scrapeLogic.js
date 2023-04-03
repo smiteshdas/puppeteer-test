@@ -43,10 +43,22 @@ const scrapeLogic = async (res) => {
     res.send(logStatement);*/
     
     await page.waitForTimeout(10000)
-    await page.screenshot({path: __dirname+'/puppeteer.png'});
+    const textSelector = await page.waitForSelector('body>div[0]')
 
 
-response.sendFile(__dirname+'/puppeteer.png');
+
+
+
+    const fullTitle = await textSelector.evaluate((el) => el.textContent);
+
+    // Print the full title
+
+    const logStatement = `The title of this blog post is ${fullTitle}`;
+
+    console.log(logStatement);
+
+    res.send(logStatement);
+    
   } catch (e) {
     console.error(e);
     res.send(`Something went wrong while running Puppeteer: ${e}`);
