@@ -42,14 +42,14 @@ const scrapeLogic = async (res) => {
     console.log(logStatement);
     res.send(logStatement);*/
     
-    await page.waitForTimeout(10000)
-    const textSelector = await page.waitForSelector('body>div[0]')
+  
+    const textSelector = await page.waitForSelector('title')
 
 
 
 
 
-    const fullTitle = await textSelector.evaluate((el) => el.textContent);
+    const fullTitle = await textSelector.evaluate((el) => el.innerHTML);
 
     // Print the full title
 
