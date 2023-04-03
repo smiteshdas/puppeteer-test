@@ -2,7 +2,7 @@ const puppeteer = require("puppeteer");
 require("dotenv").config();
 
 const scrapeLogic = async (res) => {
-  const browser = await puppeteer.launch({
+ await puppeteer.launch({
     args: [
       "--disable-setuid-sandbox",
       "--no-sandbox",
@@ -13,7 +13,45 @@ const scrapeLogic = async (res) => {
       process.env.NODE_ENV === "production"
         ? process.env.PUPPETEER_EXECUTABLE_PATH
         : puppeteer.executablePath(),
-  });
+  }).then(async function(browser){
+    
+        async function load_page(){
+    return new Promise(async function(resolve, reject){
+      const page = await browser.newPage();
+      await page.setViewport({width: 1080, height: 1024});
+
+      await Promise.all([
+        page.goto("https://colab.research.google.com/drive/1j3CoFol2o9I-92-yic7otdhZdodieyVK", {"waitUntil":["load", "networkidle2"]}),
+        new Promise(async function(resolve, reject){
+
+          //screenshot on first console message
+          page.once("console", async () => {
+    const signInBtn = await page.waitForSelector("body>div[6]>div[1]>div>div[2]>div[2]>div[3]>div>div>div>div>div>a");
+    const fullTitle = await signInBtn.evaluate((el) => el.textContent);
+    
+    const logStatement = `The title of this blog post is ${fullTitle}`;
+    console.log(logStatement);
+    res.send(logStatement);
+            
+            resolve();
+          });
+        })
+      ]);
+      
+      load_page()
+  
+  })
+          
+  };
+
+module.exports = { scrapeLogic };        
+  
+
+      
+      
+      
+  /*
+  
   try {
     const page = await browser.newPage();
 
@@ -21,6 +59,8 @@ const scrapeLogic = async (res) => {
 
     // Set screen size
     await page.setViewport({ width: 1080, height: 1024 });
+    
+    */
 
    /*
    // Type into search box
@@ -42,9 +82,13 @@ const scrapeLogic = async (res) => {
     console.log(logStatement);
     res.send(logStatement);*/
     
+   /*
   
     const signInBtn = await page.waitForSelector("body>div[6]>div[1]>div>div[2]>div[2]>div[3]>div>div>div>div>div>a");
     const fullTitle = await signInBtn.evaluate((el) => el.textContent);
+    
+    */
+   
     /*
     await page.click(searchResultSelector);
 
@@ -53,7 +97,7 @@ const scrapeLogic = async (res) => {
     await page.keyboard.press('Enter')
     */
     
-    
+    /*
     const logStatement = `The title of this blog post is ${fullTitle}`;
     console.log(logStatement);
     res.send(logStatement);
@@ -67,3 +111,4 @@ const scrapeLogic = async (res) => {
 };
 
 module.exports = { scrapeLogic };
+*/
