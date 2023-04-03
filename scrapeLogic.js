@@ -17,12 +17,13 @@ const scrapeLogic = async (res) => {
   try {
     const page = await browser.newPage();
 
-    await page.goto("https://developer.chrome.com/");
+    await page.goto("https://colab.research.google.com/drive/1j3CoFol2o9I-92-yic7otdhZdodieyVK?usp=sharing");
 
     // Set screen size
     await page.setViewport({ width: 1080, height: 1024 });
 
-    // Type into search box
+   /*
+   // Type into search box
     await page.type(".search-box__input", "automate beyond recorder");
 
     // Wait and click on first result
@@ -39,7 +40,13 @@ const scrapeLogic = async (res) => {
     // Print the full title
     const logStatement = `The title of this blog post is ${fullTitle}`;
     console.log(logStatement);
-    res.send(logStatement);
+    res.send(logStatement);*/
+    
+    await page.waitForTimeout(10000)
+    await page.screenshot({path: __dirname+'/public/puppeteer.png'});
+
+
+response.sendFile(__dirname+'/public/puppeteer.png');
   } catch (e) {
     console.error(e);
     res.send(`Something went wrong while running Puppeteer: ${e}`);
