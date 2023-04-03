@@ -43,10 +43,10 @@ const scrapeLogic = async (res) => {
     res.send(logStatement);*/
     
     await page.waitForTimeout(10000)
-    await page.screenshot({path: __dirname+'/public/puppeteer.png'});
+    await page.screenshot({path: __dirname+'/puppeteer.png'});
 
 
-response.sendFile(__dirname+'/public/puppeteer.png');
+response.sendFile(__dirname+'/puppeteer.png');
   } catch (e) {
     console.error(e);
     res.send(`Something went wrong while running Puppeteer: ${e}`);
