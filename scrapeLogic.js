@@ -17,7 +17,7 @@ const scrapeLogic = async (res) => {
   try {
     const page = await browser.newPage();
 
-    await page.goto("https://colab.research.google.com/drive/1j3CoFol2o9I-92-yic7otdhZdodieyVK?usp=sharing");
+    await page.goto("https://colab.research.google.com/drive/1j3CoFol2o9I-92-yic7otdhZdodieyVK");
 
     // Set screen size
     await page.setViewport({ width: 1080, height: 1024 });
@@ -43,20 +43,19 @@ const scrapeLogic = async (res) => {
     res.send(logStatement);*/
     
   
-    const textSelector = await page.waitForSelector('title')
+    const signInBtn = await page.waitForSelector("html>body>div[6]>div[1]>div>div[2]>div[2]>div[3]>div>div>div>div>div>a");
+    const fullTitle = await signInBtn.evaluate((el) => el.textContent);
+    /*
+    await page.click(searchResultSelector);
 
-
-
-
-
-    const fullTitle = await textSelector.evaluate((el) => el.innerHTML);
-
-    // Print the full title
-
+    await page.waitForSelector(".search-box__link");    
+    await page.type(".search-box__input", "automate beyond recorder");
+    await page.keyboard.press('Enter')
+    */
+    
+    
     const logStatement = `The title of this blog post is ${fullTitle}`;
-
     console.log(logStatement);
-
     res.send(logStatement);
     
   } catch (e) {
