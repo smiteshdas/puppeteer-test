@@ -26,7 +26,7 @@ const scrapeLogic = async (res) => {
         new Promise(async function(resolve, reject){
           //screenshot on first console message
           page.once("console", async () => {
-    const signInBtn = await page.waitForSelector("body>div[2]>div>div>div[1]>div>div>div>div[1]>section>main>div>div[4]>article>div>div>div[1]>div[1]>a>div>div[1]>img);
+    const signInBtn = await page.waitForSelector("body>div[2]>div>div>div[1]>div>div>div>div[1]>section>main>div>div[4]>article>div>div>div[1]>div[1]>a>div>div[1]>img");
     const fullTitle = await signInBtn.evaluate((el) => el.alt);
     
     const logStatement = `The title of this blog post is ${fullTitle}`;
